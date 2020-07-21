@@ -1,4 +1,14 @@
+app.swagger_ui:
+    path: /api/v1/doc
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+
+app.swagger:
+    path: /api/v1/doc.json
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger }
+
 test:
-    path:       /test
+    path:       /api/v1/test
     controller: App\Controller\TestController::apiWorks
     methods:    GET
