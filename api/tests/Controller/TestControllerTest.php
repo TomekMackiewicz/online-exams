@@ -9,7 +9,7 @@ class TestControllerTest extends WebTestCase
     public function testApiWorks()
     {
         $client = static::createClient();
-        $client->request('GET', '/test');
+        $client->request('GET', '/api/v1/test');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
