@@ -2,6 +2,18 @@
     "composer/package-versions-deprecated": {
         "version": "1.10.99"
     },
+    "dama/doctrine-test-bundle": {
+        "version": "4.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "4.0",
+            "ref": "56eaa387b5e48ebcc7c95a893b47dfa1ad51449c"
+        },
+        "files": [
+            "config/packages/test/dama_doctrine_test_bundle.yaml"
+        ]
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -23,6 +35,9 @@
     "doctrine/common": {
         "version": "2.13.3"
     },
+    "doctrine/data-fixtures": {
+        "version": "1.4.3"
+    },
     "doctrine/dbal": {
         "version": "2.10.2"
     },
@@ -39,6 +54,18 @@
             "config/packages/prod/doctrine.yaml",
             "src/Entity/.gitignore",
             "src/Repository/.gitignore"
+        ]
+    },
+    "doctrine/doctrine-fixtures-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "fc52d86631a6dfd9fdf3381d0b7e3df2069e51b3"
+        },
+        "files": [
+            "src/DataFixtures/AppFixtures.php"
         ]
     },
     "doctrine/doctrine-migrations-bundle": {
@@ -240,6 +267,9 @@
             ".env"
         ]
     },
+    "symfony/form": {
+        "version": "v5.1.2"
+    },
     "symfony/framework-bundle": {
         "version": "5.1",
         "recipe": {
@@ -266,6 +296,9 @@
         "version": "v5.1.2"
     },
     "symfony/inflector": {
+        "version": "v5.1.2"
+    },
+    "symfony/intl": {
         "version": "v5.1.2"
     },
     "symfony/maker-bundle": {
@@ -299,6 +332,9 @@
         ]
     },
     "symfony/polyfill-intl-grapheme": {
+        "version": "v1.18.0"
+    },
+    "symfony/polyfill-intl-icu": {
         "version": "v1.18.0"
     },
     "symfony/polyfill-intl-normalizer": {
