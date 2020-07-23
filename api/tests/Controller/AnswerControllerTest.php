@@ -1,49 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use App\Entity\Answer;
+use App\Tests\InitWebTestCase;
+use App\DataFixtures\AnswerFixtures;
 
-class AnswerControllerTest extends WebTestCase
+class AnswerControllerTest extends InitWebTestCase
 {
     protected function setUp()
     {
-        $this->client = static::createClient();
-
-        if ('test' !== self::$kernel->getEnvironment()) {
-            throw new \LogicException('Tests cases with fresh database must be executed in the test environment');
-        }
-
-        $kernel = self::bootKernel();
-        $this->entityManager = $kernel->getContainer()->get('doctrine')->getManager();
+        parent::setUp();
     }
 
     protected function tearDown(): void
     {
-        parent::tearDown();
-
-        $purger = new ORMPurger($this->entityManager);
-        // Purger mode 2 truncates, resetting autoincrements
-        $purger->setPurgeMode(2);
-        $purger->purge();
-        $this->entityManager->close();
-        $this->entityManager = null;        
+        parent::tearDown();        
     }
 
     public function testGetAnswer()
     {
-        $answer = new Answer();
-        $answer->setTitle('Yes');
-        $answer->setIsCorrect(true);
-        $answer->setMessage('Ok, I guess you are right');
-        $answer->setPoints(1);
-        $this->entityManager->persist($answer);
-        $this->entityManager->flush();
-        $id = $answer->getId();
-       
-        $this->client->request('GET', '/api/v1/answer/'.$id);
+        $this->addFixture(AnswerFixtures::class);
+        $this->client->request('GET', '/api/v1/answer/1');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
