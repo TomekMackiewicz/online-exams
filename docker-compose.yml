@@ -1,6 +1,11 @@
 # Run docker-compose build
 # Run docker-compose up
-# http://localhost:82
+# docker-compose ps - show all containers
+# docker exec -it {container_name} bash -- connect to container
+
+# Symfony: http://localhost:82
+# Angular: http://localhost:4200
+# Phpmyadmin: http://localhost:8080
 
 version: '3.1'
 services:
