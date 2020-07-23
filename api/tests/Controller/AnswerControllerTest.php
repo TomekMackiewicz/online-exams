@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Controller;
 
 use App\Tests\InitWebTestCase;
-use App\DataFixtures\AnswerFixtures;
+use App\DataFixtures\AnswerFixture;
 
 class AnswerControllerTest extends InitWebTestCase
 {
@@ -21,7 +21,7 @@ class AnswerControllerTest extends InitWebTestCase
 
     public function testGetAnswer()
     {
-        $this->addFixture(AnswerFixtures::class);
+        $this->addFixture(AnswerFixture::class);
         $this->client->request('GET', '/api/v1/answer/1');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
@@ -50,19 +50,21 @@ class AnswerControllerTest extends InitWebTestCase
         $this->assertEquals(201, $this->client->getResponse()->getStatusCode());
     }
 
-//    public function testPatchAnswer()
-//    {
-//        $client = static::createClient();
-//        $client->request('PATCH', '/api/v1/answer/1');
-//
-//        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-//    }
+    public function testPatchAnswer()
+    {
+        $this->addFixture(AnswerFixture::class);
+        $this->client->request('PATCH', '/api/v1/answer/1', [
+            'title' => 'New title'
+        ]);
 
-//    public function testDeleteAnswer()
-//    {
-//        //$client = static::createClient();
-//        $this->client->request('DELETE', '/api/v1/answer/1');
-//
-//        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-//    }
+        $this->assertEquals(204, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testDeleteAnswer()
+    {
+        $this->addFixture(AnswerFixture::class);
+        $this->client->request('DELETE', '/api/v1/answer/1');
+
+        $this->assertEquals(204, $this->client->getResponse()->getStatusCode());
+    }
 }

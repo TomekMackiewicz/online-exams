@@ -6,7 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Answer;
 
-class AnswerFixtures extends Fixture
+class AnswerFixture extends Fixture
 {
     public function load(ObjectManager $manager)
     {
