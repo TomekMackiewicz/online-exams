@@ -1,12 +1,12 @@
-app.swagger_ui:
-    path: /api/v1/doc
-    methods: GET
-    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
-
-app.swagger:
-    path: /api/v1/doc.json
+app.swagger.areas:
+    path: /api/v1/doc/{area}.json
     methods: GET
     defaults: { _controller: nelmio_api_doc.controller.swagger }
+
+app.swagger_ui:
+    path: /api/v1/doc/{area}
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui, area: default }
 
 test:
     path:       /api/v1/test

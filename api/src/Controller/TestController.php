@@ -7,6 +7,9 @@ namespace App\Controller;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Swagger\Annotations as SWG;
 
+/**
+ * @SWG\Tag(name="Test")
+ */
 class TestController extends AbstractFOSRestController
 {
     /**

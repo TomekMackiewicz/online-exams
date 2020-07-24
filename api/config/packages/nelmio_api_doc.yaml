@@ -12,6 +12,11 @@ nelmio_api_doc:
 #                in: header
 #        security:
 #            - Bearer: []
-    areas: # to filter documented areas
-        path_patterns:
-            - ^/api/v1/(?!/doc$) # Accepts routes under /api/v1 except /api/v1/doc
+    areas:
+        default:
+            path_patterns:
+                - ^/api/v1(?!/doc$)
+        test:
+            path_patterns: [ ^/api/v1/test ]
+        answer:
+            path_patterns: [ ^/api/v1/answer ]

@@ -13,6 +13,9 @@ use App\Form\Type\AnswerType;
 use Swagger\Annotations as SWG;
 use Nelmio\ApiDocBundle\Annotation\Model;
 
+/**
+ * @SWG\Tag(name="Answer")
+ */
 class AnswerController extends AbstractFOSRestController
 {
     public function __construct(EntityManagerInterface $entityManager) 
