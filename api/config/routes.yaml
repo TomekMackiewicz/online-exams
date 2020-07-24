@@ -13,6 +13,15 @@ test:
     controller: App\Controller\TestController::apiWorks
     methods:    GET
 
+register:
+    path: /api/v1/register
+    controller: App\Controller\AuthController::register
+    methods: POST
+
+api_login_check:
+    path: /api/v1/login_check
+    controller: App\Controller\AuthController::getTokenUser
+
 answer_get:
     path:       /api/v1/answer/{id}
     controller: App\Controller\AnswerController::getAnswer
