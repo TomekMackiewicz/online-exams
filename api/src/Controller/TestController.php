@@ -10,15 +10,16 @@ use Swagger\Annotations as SWG;
 class TestController extends AbstractFOSRestController
 {
     /**
+     * @return string
+     * 
      * @SWG\Response(
      *     response=200,
-     *     description="Returns info if api works",
+     *     description="API is alive",
      *     @SWG\Schema(
      *         type="string",
      *         example={"Api works!"}
      *     )
      * )
-     * @return string
      */
     public function apiWorks()
     {
