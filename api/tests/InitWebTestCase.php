@@ -12,6 +12,10 @@ use Doctrine\ORM\Tools\SchemaTool;
 use Metadata\ClassMetadata;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\PlaintextPasswordEncoder;
+use App\Entity\User;
 
 class InitWebTestCase extends WebTestCase
 {
@@ -59,6 +63,18 @@ class InitWebTestCase extends WebTestCase
         $executor->execute($loader->getFixtures());
     }
 
+    public function addUserFixture($className)
+    {
+        $loader = new Loader();
+        $defaultEncoder = new PlaintextPasswordEncoder();
+        $encoderFactory = new EncoderFactory([User::class => $defaultEncoder]);
+        $encoder = new UserPasswordEncoder($encoderFactory);
+        $loader->addFixture(new $className($encoder));
+        $purger = new ORMPurger($this->entityManager);
+        $executor = new ORMExecutor($this->entityManager, $purger);
+        $executor->execute($loader->getFixtures());
+    }
+
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -68,6 +84,6 @@ class InitWebTestCase extends WebTestCase
         $purger->setPurgeMode(2);
         $purger->purge();
         $this->entityManager->close();
-        $this->entityManager = null;        
+        $this->entityManager = null;
     }
 }
