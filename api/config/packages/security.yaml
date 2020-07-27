@@ -24,7 +24,7 @@ security:
             anonymous: true
 
         api:
-            pattern:   ^/api
+            pattern:   ^/api/v1/admin
             stateless: true
             provider: app_user_provider
             guard:
@@ -39,6 +39,7 @@ security:
             anonymous: true
 
     access_control:
-        - { path: ^/api/v1/register,   roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/v1/login,      roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/v1/admin,      roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/v1,             roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/v1/register,    roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/v1/login,       roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/v1/admin,       roles: IS_AUTHENTICATED_FULLY }
