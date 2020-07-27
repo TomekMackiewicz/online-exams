@@ -57,7 +57,7 @@ class AnswerControllerTest extends InitWebTestCase
             'title' => 'New title'
         ]);
 
-        $this->assertEquals(204, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     public function testDeleteAnswer()
@@ -65,6 +65,6 @@ class AnswerControllerTest extends InitWebTestCase
         $this->addFixture(AnswerFixture::class);
         $this->client->request('DELETE', '/api/v1/answer/1');
 
-        $this->assertEquals(204, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 }

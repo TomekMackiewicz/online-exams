@@ -14,7 +14,7 @@ class AnswerFixture extends Fixture implements FixtureGroupInterface
     public function load(ObjectManager $manager)
     {
         $answer = new Answer();
-        $answer->setTitle('Were Ross and Rachel on a break?');
+        $answer->setTitle('Yes, Ross and Rachel were on a break.');
         $answer->setIsCorrect(true);
         $answer->setMessage('Ok, I guess they were');
         $answer->setPoints(1);

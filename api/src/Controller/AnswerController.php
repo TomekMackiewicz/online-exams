@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Answer;
 use App\Form\Type\AnswerType;
+use App\Service\FormErrorService;
 use Swagger\Annotations as SWG;
 use Nelmio\ApiDocBundle\Annotation\Model;
 
@@ -18,10 +19,11 @@ use Nelmio\ApiDocBundle\Annotation\Model;
  */
 class AnswerController extends AbstractFOSRestController
 {
-    public function __construct(EntityManagerInterface $entityManager) 
+    public function __construct(EntityManagerInterface $entityManager, FormErrorService $formErrorService) 
     {
         $this->em = $entityManager;
         $this->repository = $this->em->getRepository(Answer::class);
+        $this->formErrorService = $formErrorService;
     }
 
     /**
@@ -120,9 +122,10 @@ class AnswerController extends AbstractFOSRestController
                 $this->view('response.created', Response::HTTP_CREATED)
             );
         }
-
+        $errors = $this->formErrorService->prepareErrors($form->getErrors(true));
+        
         return $this->handleView(
-            $this->view('response.bad_request', Response::HTTP_BAD_REQUEST)
+            $this->view($errors, Response::HTTP_BAD_REQUEST)
         );
     }
 
@@ -180,8 +183,9 @@ class AnswerController extends AbstractFOSRestController
 
             return $this->handleView($this->view('request.updated', Response::HTTP_OK));
         }
-        
-        return $this->handleView($this->view('error', Response::HTTP_BAD_REQUEST));        
+        $errors = $this->formErrorService->prepareErrors($form->getErrors(true));
+
+        return $this->handleView($this->view($errors, Response::HTTP_BAD_REQUEST));        
     }
 
     /**
