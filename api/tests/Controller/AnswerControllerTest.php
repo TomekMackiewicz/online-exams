@@ -30,7 +30,7 @@ class AnswerControllerTest extends InitWebTestCase
     {
         $this->client->request('POST', '/api/v1/answer', [
             'title' => 'Example title',
-            'isCorrect' => true,
+            'is_correct' => true,
             'message' => 'Example message',
             'points' => 1 
         ]);
@@ -42,7 +42,7 @@ class AnswerControllerTest extends InitWebTestCase
     {
         $this->client->request('POST', '/api/v1/answer', [
             'title' => 'Example title',
-            'isCorrect' => true,
+            'is_correct' => true,
             'message' => 'Example message',
             'points' => 1 
         ]);

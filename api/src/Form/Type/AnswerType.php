@@ -20,7 +20,7 @@ class AnswerType extends AbstractType
             ->add('title', TextType::class, [
                 'invalid_message' => 'validation.not_string'
             ])
-            ->add('isCorrect', ChoiceType::class, [
+            ->add('is_correct', ChoiceType::class, [
                 'choices' => [
                     'true' => true,
                     'false' => false
