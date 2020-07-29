@@ -175,7 +175,7 @@ class AnswerController extends AbstractFOSRestController
         }
 
         $form = $this->createForm(AnswerType::class, $answer);
-        $form->submit($data);
+        $form->submit($data, false);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($answer);
