@@ -1,3 +1,5 @@
+# --- SWAGGER ---
+
 app.swagger.areas:
     path:       /api/v1/doc/{area}.json
     methods:    GET
@@ -8,20 +10,31 @@ app.swagger_ui:
     methods:    GET
     defaults: { _controller: nelmio_api_doc.controller.swagger_ui, area: default }
 
+# --- TEST ---
+
 test:
     path:       /api/v1/test
     controller: App\Controller\TestController::apiWorks
     methods:    GET
 
+# --- USER ---
+
 register:
     path:       /api/v1/register
-    controller: App\Controller\AuthController::register
+    controller: App\Controller\UserController::register
     methods:    POST
 
 api_login_check:
     path:       /api/v1/login_check
-    controller: App\Controller\AuthController::getTokenUser
+    controller: App\Controller\UserController::getTokenUser
     methods:    POST
+
+user_get:
+    path:       /api/v1/user/{id}
+    controller: App\Controller\UserController::getUserData
+    methods:    GET
+
+# --- ANSWER ---
 
 answer_get:
     path:       /api/v1/answer/{id}

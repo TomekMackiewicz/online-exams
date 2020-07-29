@@ -19,15 +19,47 @@ use Swagger\Annotations as SWG;
 use Nelmio\ApiDocBundle\Annotation\Model;
 
 /**
- * @SWG\Tag(name="Auth")
+ * @SWG\Tag(name="User")
  */
-class AuthController extends AbstractFOSRestController
+class UserController extends AbstractFOSRestController
 {
     public function __construct(EntityManagerInterface $entityManager, FormErrorService $formErrorService) 
     {
         $this->em = $entityManager;
         $this->repository = $this->em->getRepository(User::class);
         $this->formErrorService = $formErrorService;
+    }
+
+    /**
+     * @param int $id
+     * @return Response
+     * 
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     type="integer",
+     *     required=true,
+     *     description="ID of requested user"
+     * )
+     * @SWG\Response(
+     *     response=200,
+     *     description="User found",
+     *     @Model(type=User::class)
+     * )
+     * @SWG\Response(
+     *     response=204,
+     *     description="User not found",
+     * )
+     */
+    public function getUserData(int $id): object
+    {
+        $user = $this->repository->findOneBy(['id' => $id]);
+
+        if (!$user) {
+            return $this->handleView($this->view(null, Response::HTTP_NO_CONTENT));
+        }
+
+        return $this->handleView($this->view($user, Response::HTTP_OK));
     }
 
     /**
