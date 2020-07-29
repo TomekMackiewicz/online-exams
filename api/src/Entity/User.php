@@ -6,10 +6,20 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Repository\UserRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="users")
+ * @UniqueEntity(
+ *   fields={"username"},
+ *   message="validation.unique"
+ * )
+ * @UniqueEntity(
+ *   fields={"email"},
+ *   message="validation.unique"
+ * ) 
  */
 class User implements UserInterface
 {
@@ -21,23 +31,54 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=64, unique=true)
+     * @ORM\Column(type="string", length=64)
+     * @Assert\NotBlank(message="validation.not_blank")
+     * @Assert\Length(
+     *   min=3,
+     *   max=64,
+     *   minMessage="validation.min_length",
+     *   maxMessage="validation.max_length"
+     * )
+     * @Assert\Type(
+     *   type="string",
+     *   message="validation.not_string"
+     * )
      */
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=180)
+     * @Assert\NotBlank(message="validation.not_blank")
+     * @Assert\Length(
+     *   max=180,
+     *   maxMessage="validation.max_length"
+     * )
+     * @Assert\Email(
+     *   message="validation.regex.email"
+     * )
      */
     private $email;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json_array")
+     * @Assert\Type(
+     *   type="array",
+     *   message="validation.not_array"
+     * )
      */
     private $roles = [];
 
     /**
-     * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="validation.not_blank")
+     * @Assert\Length(
+     *   min=6,
+     *   minMessage="validation.min_length"
+     * )
+     * @Assert\Type(
+     *   type="string",
+     *   message="validation.not_string"
+     * )
      */
     private $password;
 
