@@ -63,6 +63,33 @@ class UserController extends AbstractFOSRestController
     }
 
     /**
+     * @return Response
+     * 
+     * @SWG\Response(
+     *     response=200,
+     *     description="Users found",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(ref="#definitions/User")
+     *     )
+     * )
+     * @SWG\Response(
+     *     response=204,
+     *     description="Users not found",
+     * )
+     */
+    public function getUsers()
+    {
+        $users = $this->repository->findAll();
+
+        if (!$users) {
+            return $this->handleView($this->view(null, Response::HTTP_NO_CONTENT));
+        }
+
+        return $this->handleView($this->view($users, Response::HTTP_OK));
+    }
+
+    /**
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      * @return JsonResponse
