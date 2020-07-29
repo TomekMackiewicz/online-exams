@@ -23,7 +23,7 @@ class AuthControllerTest extends InitWebTestCase
     {
         $this->client->request('POST', '/api/v1/register', [
             'username' => 'test_user',
-            'password' => 'test',
+            'password' => ['first' => 'test', 'second' => 'test'],
             'email' => 'test@gmail.com'
         ]);
 
