@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AnswerRepository")
@@ -21,21 +22,37 @@ class Answer
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Type(
+     *   type="string",
+     *   message="validation.not_string"
+     * )
      */
     private $title;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\Type(
+     *   type="bool",
+     *   message="validation.not_bool"
+     * )
      */
     private $isCorrect;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Type(
+     *   type="string",
+     *   message="validation.not_string"
+     * )
      */
     private $message;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(
+     *   type="integer",
+     *   message="validation.not_int"
+     * )
      */
     private $points;
 
