@@ -22,6 +22,7 @@ class Answer
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="validation.not_blank")
      * @Assert\Type(
      *   type="string",
      *   message="validation.not_string"
