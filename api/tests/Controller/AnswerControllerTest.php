@@ -28,12 +28,7 @@ class AnswerControllerTest extends InitWebTestCase
 
     public function testGetAnswers()
     {
-        $this->client->request('POST', '/api/v1/answer', [
-            'title' => 'Example title',
-            'is_correct' => true,
-            'message' => 'Example message',
-            'points' => 1 
-        ]);
+        $this->addFixture(AnswerFixture::class);
         $this->client->request('GET', '/api/v1/answer');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
