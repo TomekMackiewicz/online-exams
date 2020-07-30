@@ -65,3 +65,30 @@ answer_delete:
     path:       /api/v1/answer/{id}
     controller: App\Controller\AnswerController::deleteAnswer
     methods:    DELETE
+
+# --- QUESTION ---
+
+question_get:
+    path:       /api/v1/question/{id}
+    controller: App\Controller\QuestionController::getQuestion
+    methods:    GET
+
+question_cget:
+    path:       /api/v1/question
+    controller: App\Controller\QuestionController::getQuestions
+    methods:    GET
+
+question_post:
+    path:       /api/v1/question
+    controller: App\Controller\QuestionController::postQuestion
+    methods:    POST
+
+question_patch:
+    path:       /api/v1/question/{id}
+    controller: App\Controller\QuestionController::patchQuestion
+    methods:    PATCH
+
+question_delete:
+    path:       /api/v1/question/{id}
+    controller: App\Controller\QuestionController::deleteQuestion
+    methods:    DELETE
