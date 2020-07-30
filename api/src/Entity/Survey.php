@@ -122,7 +122,7 @@ class Survey
     private $restrictSubmissions;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type(
      *   type="integer",
      *   message="validation.not_int"
@@ -267,12 +267,12 @@ class Survey
         return $this;
     }
 
-    public function getAllowedSubmissions(): ?bool
+    public function getAllowedSubmissions(): ?int
     {
         return $this->allowedSubmissions;
     }
 
-    public function setAllowedSubmissions(?bool $allowedSubmissions): self
+    public function setAllowedSubmissions(?int $allowedSubmissions): self
     {
         $this->allowedSubmissions = $allowedSubmissions;
 
