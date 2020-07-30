@@ -68,6 +68,15 @@ class Question
      */
     private $isRequired;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Assert\Type(
+     *   type="bool",
+     *   message="validation.not_bool"
+     * )
+     */
+    private $shuffleAnswers;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -129,6 +138,18 @@ class Question
     public function setIsRequired(bool $isRequired): self
     {
         $this->isRequired = $isRequired;
+
+        return $this;
+    }
+
+    public function getShuffleAnswers(): ?bool
+    {
+        return $this->shuffleAnswers;
+    }
+
+    public function setShuffleAnswers(?bool $shuffleAnswers): self
+    {
+        $this->shuffleAnswers = $shuffleAnswers;
 
         return $this;
     }

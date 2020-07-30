@@ -40,7 +40,8 @@ class QuestionControllerTest extends InitWebTestCase
             'description' => 'Example description',
             'type' => 'radio',
             'hint' => 'Example hint',
-            'is_required' => true
+            'is_required' => true,
+            'shuffle_answers' => false
         ]);
 
         $this->assertEquals(201, $this->client->getResponse()->getStatusCode());

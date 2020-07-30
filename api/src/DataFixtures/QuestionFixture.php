@@ -19,6 +19,7 @@ class QuestionFixture extends Fixture implements FixtureGroupInterface
         $question->setType('radio');
         $question->setHint('Example hint');
         $question->setIsRequired(true);
+        $question->setShuffleAnswers(false);
         $manager->persist($question);
 
         $manager->flush();

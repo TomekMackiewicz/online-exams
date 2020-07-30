@@ -111,7 +111,7 @@ class QuestionController extends AbstractFOSRestController
      */
     public function postQuestion(Request $request)
     {        
-        $question= new Question();
+        $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
         $form->submit($request->request->all());
         if ($form->isSubmitted() && $form->isValid()) {

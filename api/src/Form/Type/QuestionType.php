@@ -34,6 +34,13 @@ class QuestionType extends AbstractType
                     'false' => false
                 ],
                 'invalid_message' => 'validation.not_bool'
+            ])
+            ->add('shuffle_answers', ChoiceType::class, [
+                'choices' => [
+                    'true' => true,
+                    'false' => false
+                ],
+                'invalid_message' => 'validation.not_bool'
             ]);
     }
 
