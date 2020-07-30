@@ -92,3 +92,30 @@ question_delete:
     path:       /api/v1/question/{id}
     controller: App\Controller\QuestionController::deleteQuestion
     methods:    DELETE
+
+# --- SURVEY ---
+
+survey_get:
+    path:       /api/v1/survey/{id}
+    controller: App\Controller\SurveyController::getSurvey
+    methods:    GET
+
+survey_cget:
+    path:       /api/v1/survey
+    controller: App\Controller\SurveyController::getSurveys
+    methods:    GET
+
+survey_post:
+    path:       /api/v1/survey
+    controller: App\Controller\SurveyController::postSurvey
+    methods:    POST
+
+survey_patch:
+    path:       /api/v1/survey/{id}
+    controller: App\Controller\SurveyController::patchSurvey
+    methods:    PATCH
+
+survey_delete:
+    path:       /api/v1/survey/{id}
+    controller: App\Controller\SurveyController::deleteSurvey
+    methods:    DELETE
