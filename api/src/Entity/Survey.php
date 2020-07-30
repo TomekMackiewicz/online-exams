@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SurveyRepository")
@@ -129,6 +131,16 @@ class Survey
      * )
      */
     private $allowedSubmissions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="survey")
+     */
+    private $questions;
+
+    public function __construct()
+    {
+        $this->questions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -275,6 +287,25 @@ class Survey
     public function setAllowedSubmissions(?int $allowedSubmissions): self
     {
         $this->allowedSubmissions = $allowedSubmissions;
+
+        return $this;
+    }
+
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
+    }
+
+    public function addQuestion(Question $question): self
+    {
+        $this->questions->add($question);
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): self
+    {
+        $this->questions->removeElement($question);
 
         return $this;
     }

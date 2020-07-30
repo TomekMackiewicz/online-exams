@@ -80,6 +80,11 @@ class Question
     private $shuffleAnswers;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Survey", inversedBy="questions")
+     */
+    private $survey;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question")
      */
     private $answers;
@@ -181,6 +186,18 @@ class Question
     public function removeAnswer(Answer $answer): self
     {
         $this->answers->removeElement($answer);
+
+        return $this;
+    }
+
+    public function getSurvey(): ?Survey
+    {
+        return $this->survey;
+    }
+
+    public function setSurvey(?Survey $survey): self
+    {
+        $this->survey = $survey;
 
         return $this;
     }

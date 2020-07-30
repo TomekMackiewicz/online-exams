@@ -122,7 +122,7 @@ class Answer
 
     public function setQuestion(?Question $question): self
     {
-        $this->category = $question;
+        $this->question = $question;
 
         return $this;
     }
