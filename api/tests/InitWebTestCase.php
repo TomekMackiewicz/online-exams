@@ -79,6 +79,12 @@ class InitWebTestCase extends WebTestCase
     {
         parent::tearDown();
 
+        // Hacky, but works (see: https://github.com/doctrine/data-fixtures/pull/127)
+        $conn = $this->entityManager->getConnection();
+        $sql = "SET foreign_key_checks = 0;";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
         $purger = new ORMPurger($this->entityManager);
         // Purger mode 2 truncates, resetting autoincrements
         $purger->setPurgeMode(2);
