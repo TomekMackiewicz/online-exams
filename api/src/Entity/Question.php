@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
@@ -76,6 +78,16 @@ class Question
      * )
      */
     private $shuffleAnswers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question")
+     */
+    private $answers;
+
+    public function __construct()
+    {
+        $this->answers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -150,6 +162,25 @@ class Question
     public function setShuffleAnswers(?bool $shuffleAnswers): self
     {
         $this->shuffleAnswers = $shuffleAnswers;
+
+        return $this;
+    }
+
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(Answer $answer): self
+    {
+        $this->answers->add($answer);
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): self
+    {
+        $this->answers->removeElement($answer);
 
         return $this;
     }
