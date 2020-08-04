@@ -11,7 +11,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     bottom: 0;
     left: 0;
     right: 0;
-  }
+}
   
   .is-mobile .dashboard-toolbar {
     position: fixed;
@@ -34,3 +34,26 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
        `<body>` to be our scrolling element for mobile layouts. */
     flex: 1 0 auto;
   }
+
+mat-sidenav {
+    width: 250px;
+}
+
+.route-icon {
+  padding-right: 8px;
+  color: gray;
+}
+
+.nav-chevron {
+  display: inline-flex;
+  vertical-align: middle;    
+}
+
+.submenu-item > .sidenav-list-item {
+  font-size: 14px;
+  height: 36px !important;
+}
+
+.submenu-item > .active {
+  background: #000 !important;
+}
