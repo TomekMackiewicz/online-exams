@@ -3,6 +3,10 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+button {
+  cursor: pointer;
+}
+
 .dashboard {
     display: flex;
     flex-direction: column;
@@ -39,6 +43,10 @@ mat-sidenav {
     width: 250px;
 }
 
+.fill-space {
+  flex: 1 1 auto;
+}
+
 .route-icon {
   padding-right: 8px;
   color: gray;
@@ -56,4 +64,8 @@ mat-sidenav {
 
 .submenu-item > .active {
   background: #000 !important;
+}
+
+.mat-slide-toggle {
+  padding-bottom: 1.34375em;
 }
