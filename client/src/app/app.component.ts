@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { NavItem } from './menu-list-item/model/nav-item';
 import { NAV_ITEMS } from './menu-list-item/const/nav-items';
@@ -12,8 +12,8 @@ export class AppComponent implements OnDestroy {
   title = 'client';
   navItems: NavItem[] = NAV_ITEMS;
   mobileQuery: MediaQueryList;
-  content = "Lorem ipsum dolor sit amet.";
   private _mobileQueryListener: () => void;
+  opened: boolean;
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');

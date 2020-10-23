@@ -1,12 +1,20 @@
 <div class="dashboard" [class.is-mobile]="mobileQuery.matches">
     <mat-toolbar color="primary" class="dashboard-toolbar">
-        <button mat-icon-button (click)="snav.toggle()">
-            <mat-icon>menu</mat-icon>
+        <button mat-icon-button (click)="sidenav.toggle()">
+            <mat-icon *ngIf="opened">menu_open</mat-icon>
+            <mat-icon *ngIf="!opened">menu</mat-icon>
         </button>
         <h1 class="app-name">Survey</h1>
     </mat-toolbar>
     <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+        <mat-sidenav #sidenav 
+            [opened]="true" 
+            (opened)="opened = true"
+            (closed)="opened = false"
+            [mode]="mobileQuery.matches ? 'over' : 'side'" 
+            [fixedInViewport]="mobileQuery.matches" 
+            fixedTopGap="56"
+        >
             <mat-nav-list>
                 <app-navigation *ngFor="let item of navItems" [item]="item"></app-navigation>
             </mat-nav-list>
