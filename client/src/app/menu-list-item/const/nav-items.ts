@@ -16,7 +16,7 @@ export const NAV_ITEMS = [
             {
                 displayName: 'add',
                 iconName: 'add',
-                route: 'surveys/add',
+                route: 'survey/add',
             }
         ]
     },

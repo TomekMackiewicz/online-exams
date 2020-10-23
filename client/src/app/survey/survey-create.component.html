@@ -1,0 +1,116 @@
+<mat-tab-group mat-stretch-tabs animationDuration="1000ms" fxFlex="100" fxLayout="column" fxLayoutGap="16px">
+    <mat-tab label="{{ 'survey overview' | translate | capitalizeFirst }}">
+        <mat-card fxFlex.gt-sm="50" fxFlex.sm="100" fxFlexOffset.gt-sm="25" fxLayout="column" fxLayoutGap="16px">
+            <mat-card-title fxLayout="row" fxLayoutGap="16px">
+                {{ surveyTitle }}
+                <span class="fill-space"></span>
+                <button mat-flat-button color="primary" type="submit" form="surveyForm" [disabled]="!formChanged">
+                    <mat-icon>save</mat-icon>
+                    {{ 'save' | translate | capitalizeFirst }}
+                </button>
+                <button mat-flat-button color="warn" type="button" (click)="delete()">
+                    {{ 'delete' | translate | capitalizeFirst }}
+                </button>
+            </mat-card-title>
+            <mat-card-content>
+                <form [formGroup]="surveyForm" id="surveyForm" (ngSubmit)="saveSurvey()" fxLayout="column" fxLayoutAlign="none">
+                    <!-- TITLE -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>{{ 'title' | translate | capitalizeFirst }}</mat-label>
+                        <input matInput placeholder="{{ 'title' | translate | capitalizeFirst }}" formControlName="title" [(ngModel)]="surveyTitle" required>
+                        <mat-error *ngIf="surveyForm.get('title').hasError('required')">
+                            {{ 'validation.required' | translate | capitalizeFirst }}
+                        </mat-error>
+                        <mat-error *ngIf="surveyForm.get('title').hasError('validation.not_blank')">
+                            {{ 'validation.not_blank' | translate | capitalizeFirst }}
+                        </mat-error>
+                    </mat-form-field>
+                    <!-- DESCRIPTION -->
+                    <mat-form-field>
+                        <mat-label>{{ 'description' | translate | capitalizeFirst }}</mat-label>
+                        <textarea matInput placeholder="{{ 'description' | translate | capitalizeFirst }}" formControlName="description" matTooltip="Info about the action"></textarea>
+                        <mat-error *ngIf="surveyForm.get('description').hasError('validation.not_string')">
+                            {{ 'validation.not_string' | translate | capitalizeFirst }}
+                        </mat-error>
+                    </mat-form-field>
+                    <!-- SUMMARY -->
+                    <mat-form-field>
+                        <mat-label>{{ 'summary' | translate | capitalizeFirst }}</mat-label>
+                        <textarea matInput placeholder="{{ 'summary' | translate | capitalizeFirst }}" formControlName="summary" matTooltip="Info about the action"></textarea>
+                        <mat-error *ngIf="surveyForm.get('summary').hasError('validation.not_string')">
+                            {{ 'validation.not_string' | translate | capitalizeFirst }}
+                        </mat-error>
+                    </mat-form-field>
+                    <div fxLayout="row" fxFlex="100" fxLayoutGap="16px">
+                        <!-- DURATION -->
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'duration' | translate | capitalizeFirst }}</mat-label>
+                            <input matInput type="datetime-local" placeholder="{{ 'duration' | translate | capitalizeFirst }}" formControlName="duration" matTooltip="Info about the action">
+                            <mat-error *ngIf="surveyForm.get('duration').hasError('validation.not_int')">
+                                {{ 'validation.not_int' | translate | capitalizeFirst }}
+                            </mat-error>                
+                        </mat-form-field>            
+                        <!-- NEXT SUBMISSION AFTER -->
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'nextSubmissionAfter' | translate | capitalizeFirst }}</mat-label>
+                            <input matInput placeholder="{{ 'nextSubmissionAfter' | translate | capitalizeFirst }}" formControlName="nextSubmissionAfter" matTooltip="Info about the action">
+                            <mat-error *ngIf="surveyForm.get('nextSubmissionAfter').hasError('validation.not_int')">
+                                {{ 'validation.not_int' | translate | capitalizeFirst }}
+                            </mat-error>
+                        </mat-form-field>             
+                        <!-- TTL -->
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ 'ttl' | translate | capitalizeFirst }}</mat-label>
+                            <input type="datetime-local" matInput placeholder="{{ 'ttl' | translate | capitalizeFirst }}" formControlName="ttl" matTooltip="Info about the action">
+                            <mat-error *ngIf="surveyForm.get('ttl').hasError('validation.not_int')">
+                                {{ 'validation.not_int' | translate | capitalizeFirst }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxFlex="100" fxLayoutGap="16px">
+                        <!-- PAGINATION -->
+                        <mat-slide-toggle formControlName="usePagination" fxFlexAlign="center">
+                            {{ 'usePagination' | translate | capitalizeFirst }}
+                        </mat-slide-toggle>
+                        <!-- QUESTIONS PER PAGE -->
+                        <mat-form-field appearance="outline" fxFlexAlign="center">
+                            <mat-label>{{ 'questionsPerPage' | translate | capitalizeFirst }}</mat-label>
+                            <input matInput placeholder="{{ 'questionsPerPage' | translate | capitalizeFirst }}" formControlName="questionsPerPage" matTooltip="Info about the action">
+                            <mat-error *ngIf="surveyForm.get('questionsPerPage').hasError('validation.not_int')">
+                                {{ 'validation.not_int' | translate | capitalizeFirst }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxFlex="100" fxLayoutGap="16px">
+                        <!-- RESTRICT SUBMISSIONS -->
+                        <mat-slide-toggle formControlName="restrictSubmissions" fxFlexAlign="center">
+                            {{ 'restrictSubmissions' | translate | capitalizeFirst }}
+                        </mat-slide-toggle> 
+                        <!-- ALLOWED SUBMISSIONS -->
+                        <mat-form-field appearance="outline" fxFlexAlign="center">
+                            <mat-label>{{ 'allowedSubmissions' | translate | capitalizeFirst }}</mat-label>
+                            <input matInput placeholder="{{ 'allowedSubmissions' | translate | capitalizeFirst }}" formControlName="allowedSubmissions" matTooltip="Info about the action">
+                            <mat-error *ngIf="surveyForm.get('allowedSubmissions').hasError('validation.not_int')">
+                                {{ 'validation.not_int' | translate | capitalizeFirst }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <!-- SHUFFLE QUESTIONS -->
+                    <mat-slide-toggle formControlName="shuffleQuestions">
+                        {{ 'shuffleQuestions' | translate | capitalizeFirst }}
+                    </mat-slide-toggle>
+                    <!-- IMMEDIATE ANSWERS -->
+                    <mat-slide-toggle formControlName="immediateAnswers">
+                        {{ 'immediateAnswers' | translate | capitalizeFirst }}
+                    </mat-slide-toggle>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </mat-tab>
+    <mat-tab label="{{ 'questions' | translate | capitalizeFirst }}">
+        Content 2
+    </mat-tab>
+    <mat-tab label="{{ 'answers' | translate | capitalizeFirst }}">
+        Content 3
+    </mat-tab>
+</mat-tab-group>
