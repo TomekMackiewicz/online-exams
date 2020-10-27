@@ -33,7 +33,7 @@ export class SurveyService {
     }
 
     createSurvey(survey: Survey): Observable<string> {
-        return this.httpClient.post<string>(environment.admin_url+'/survey', survey, {headers: HEADERS})
+        return this.httpClient.post<string>(environment.base_url+'/survey', survey, {headers: HEADERS})
             .pipe(catchError(prepareError));
     }
 

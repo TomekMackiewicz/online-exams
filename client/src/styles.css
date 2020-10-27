@@ -63,7 +63,7 @@ mat-sidenav {
 }
 
 .submenu-item > .active {
-  background: #000 !important;
+  background: #eee !important;
 }
 
 .mat-slide-toggle {

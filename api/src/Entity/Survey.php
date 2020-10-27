@@ -79,7 +79,6 @@ class Survey
 
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\NotBlank(message="validation.not_blank")
      * @Assert\Type(
      *   type="bool",
      *   message="validation.not_bool"
