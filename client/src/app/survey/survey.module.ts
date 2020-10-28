@@ -27,7 +27,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
-
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ApplicationPipesModule } from '../pipes/application-pipes.module';
 
 import { SurveyCreateComponent } from './survey-create.component';
@@ -72,6 +72,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
     NgxMatTimepickerModule,
+    CKEditorModule,
     ApplicationPipesModule,
     TranslateModule.forRoot({
         loader: {
