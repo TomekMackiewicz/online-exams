@@ -2,12 +2,11 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SurveyService } from './survey.service';
-//import { CategoryService } from '../category/category.service';
 import { UiService } from '../common/services/ui.service';
 import { handleError } from '../common/functions/error.functions';
 import { Question } from '../question/question';
 import { QuestionType } from '../const/questionType';
-//import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
     selector: 'app-survey-create',
@@ -18,14 +17,14 @@ export class SurveyCreateComponent implements OnInit {
 
     formChanged: boolean = false;
     surveyTitle: string;
+    surveyId: number;
     questionLabel: string;
     questions: Question[] = [];
+    responseData: any = {};
     durationPattern = { 
         '0': { pattern: new RegExp('\[0-9\]')},
         '1': { pattern: new RegExp('\[0-5\]')} 
     };
-
-    //picker;
 
     questionTypes: QuestionType[] = [
         {value: 'steak-0', viewValue: 'Steak'},
@@ -33,7 +32,7 @@ export class SurveyCreateComponent implements OnInit {
         {value: 'tacos-2', viewValue: 'Tacos'}
       ];
 
-    //editor = ClassicEditor;
+    editor = ClassicEditor;
     surveyForm = this.fb.group({
         title: ['', Validators.required],
         description: [''],
@@ -46,8 +45,7 @@ export class SurveyCreateComponent implements OnInit {
         shuffle_questions: [''],
         immediate_answers: [''],
         restrict_submissions: [''],
-        allowed_submissions: {value: null, disabled: true},
-        //questions: [this.questions]
+        allowed_submissions: {value: null, disabled: true}
     });
 
     questionForm = this.fb.group({
@@ -69,21 +67,12 @@ export class SurveyCreateComponent implements OnInit {
     ) { }
     
     ngOnInit(): void {
+        this.surveyId = -1;
         this.onChanges();
-        //
-        // this.categoryService.getCategories().subscribe(
-        //     data => {
-        //         this.categories = data.categories;
-        //     },
-        //     error => {
-        //         console.log(error); // TODO: handle error
-        //     }
-        // );
     }
 
     onChanges(): void {
         this.surveyForm.valueChanges.subscribe(val => {
-            console.log('formChanged');
             this.formChanged = true;
         });
 
@@ -109,20 +98,40 @@ export class SurveyCreateComponent implements OnInit {
     }
 
     saveSurvey() {
-        return this.surveyService.createSurvey(this.surveyForm.getRawValue()).subscribe(
-            success => {
-                this.formChanged = false;
-                this.uiService.openSnackBar(success, 'success-notification-overlay');
-                this.ref.detectChanges();
-            },
-            error => {
-                let errors = handleError(error, this.surveyForm);
-                if (errors !== null && typeof errors.message !== 'undefined') {
-                    this.uiService.openSnackBar(errors.message, 'error-notification-overlay');
+        if (this.surveyId !== -1) {
+            return this.surveyService.updateSurvey(this.surveyForm.getRawValue(), this.surveyId).subscribe(
+                data => {
+                    this.formChanged = false;
+                    this.uiService.openSnackBar(data, 'success-notification-overlay');
+                    this.ref.detectChanges();
+                },
+                error => {
+                    let errors = handleError(error, this.surveyForm);
+                    if (errors !== null && typeof errors.message !== 'undefined') {
+                        this.uiService.openSnackBar(errors.message, 'error-notification-overlay');
+                    }
+                    this.ref.detectChanges();
                 }
-                this.ref.detectChanges();
-            }
-        );
+            );
+        } else {
+            return this.surveyService.createSurvey(this.surveyForm.getRawValue()).subscribe(
+                data => {
+                    this.responseData = data;
+                    this.surveyId = this.responseData.id;
+                    this.formChanged = false;
+                    this.uiService.openSnackBar(this.responseData.response, 'success-notification-overlay');
+                    this.ref.detectChanges();
+                },
+                error => {
+                    let errors = handleError(error, this.surveyForm);
+                    if (errors !== null && typeof errors.message !== 'undefined') {
+                        this.uiService.openSnackBar(errors.message, 'error-notification-overlay');
+                    }
+                    this.ref.detectChanges();
+                }
+            );
+        }
+
     }
 
     delete() {

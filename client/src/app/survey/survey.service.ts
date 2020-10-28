@@ -32,13 +32,13 @@ export class SurveyService {
             .pipe(catchError(prepareError));
     }
 
-    createSurvey(survey: Survey): Observable<string> {
-        return this.httpClient.post<string>(environment.base_url+'/survey', survey, {headers: HEADERS})
+    createSurvey(survey: Survey): Observable<Object> {
+        return this.httpClient.post<Object>(environment.base_url+'/survey', survey, {headers: HEADERS})
             .pipe(catchError(prepareError));
     }
 
-    updateSurvey(survey: Survey): Observable<any> {
-        return this.httpClient.patch<any>(environment.admin_url+'/survey/'+survey.id, survey, {headers: HEADERS})
+    updateSurvey(survey: Survey, id: number): Observable<any> {
+        return this.httpClient.patch<any>(environment.base_url+'/survey/'+id, survey, {headers: HEADERS})
             .pipe(catchError(prepareError));
     }
        

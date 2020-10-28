@@ -119,7 +119,10 @@ class SurveyController extends AbstractFOSRestController
             $this->em->flush();
 
             return $this->handleView(
-                $this->view('response.created', Response::HTTP_CREATED)
+                $this->view(
+                    ['response' => 'response.created', 'id' => $survey->getId()], 
+                    Response::HTTP_CREATED
+                )
             );
         }
         $errors = $this->formErrorService->prepareErrors($form->getErrors(true));

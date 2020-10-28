@@ -78,7 +78,7 @@ class Survey
     private $ttl;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      * @Assert\Type(
      *   type="bool",
      *   message="validation.not_bool"

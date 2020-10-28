@@ -13,7 +13,7 @@
                 </button>
             </mat-card-title>
             <mat-card-content>
-                <form [formGroup]="surveyForm" id="surveyForm" (ngSubmit)="saveSurvey()" fxLayout="column" fxLayoutAlign="none">
+                <form [formGroup]="surveyForm" id="surveyForm" (ngSubmit)="saveSurvey()" fxLayout="column" fxLayoutGap="16px">
                     <!-- TITLE -->
                     <mat-form-field appearance="outline">
                         <mat-label>{{ 'title' | translate | capitalizeFirst }}</mat-label>
@@ -41,23 +41,25 @@
                             {{ 'validation.not_string' | translate | capitalizeFirst }}
                         </mat-error>
                     </mat-form-field>
-                    <div fxLayout="row" fxFlex="100" fxLayoutGap="16px">
-                        <!-- DURATION -->
-                        <mat-form-field appearance="outline">
+                    <!-- DURATION -->
+                    <div fxLayout="row" fxFlex="100">
+                        <mat-form-field fxFlex.gt-sm="30">
                             <mat-label>{{ 'duration' | translate | capitalizeFirst }}</mat-label>
                             <input matInput [patterns]="durationPattern" 
-                                   mask="00:10:10" 
-                                   placeholder="HH:MM:SS" 
-                                   formControlName="duration" 
-                                   matTooltip="Survey duration (format HH:MM:SS). Leave blank for unlimited time"
+                                    mask="00:10:10" 
+                                    placeholder="HH:MM:SS" 
+                                    formControlName="duration" 
+                                    matTooltip="Survey duration (format HH:MM:SS). Leave blank for unlimited time"
                             >
                             <mat-error *ngIf="surveyForm.get('duration').hasError('validation.not_int')">
                                 {{ 'validation.not_int' | translate | capitalizeFirst }}
                             </mat-error>                
-                        </mat-form-field>            
-                        <!-- NEXT SUBMISSION AFTER -->
+                        </mat-form-field> 
+                    </div>           
+                    <!-- NEXT SUBMISSION AFTER -->
+                    <div fxLayout="row" fxFlex="100">
 <!-- submit once - przemyśleć relację! -->
-                        <mat-form-field appearance="outline">
+                        <mat-form-field fxFlex.gt-sm="30">
                             <mat-label>{{ 'next_submission_after' | translate | capitalizeFirst }}</mat-label>
                             <!-- <input matInput placeholder="{{ 'next_submission_after' | translate | capitalizeFirst }}" formControlName="next_submission_after" matTooltip="Info about the action"> -->
                             <input matInput [patterns]="durationPattern" 
@@ -69,9 +71,11 @@
                             <mat-error *ngIf="surveyForm.get('next_submission_after').hasError('validation.not_int')">
                                 {{ 'validation.not_int' | translate | capitalizeFirst }}
                             </mat-error>
-                        </mat-form-field>             
-                        <!-- TTL -->
-                        <mat-form-field appearance="outline">
+                        </mat-form-field>
+                    </div>
+                    <!-- TTL -->
+                    <div fxLayout="row" fxFlex="100">
+                        <mat-form-field fxFlex.gt-sm="30">
                             <mat-label>{{ 'ttl' | translate | capitalizeFirst }}</mat-label>
                             <input [ngxMatDatetimePicker]="picker"
                                    matInput 
@@ -92,7 +96,7 @@
                             {{ 'usePagination' | translate | capitalizeFirst }}
                         </mat-slide-toggle>
                         <!-- QUESTIONS PER PAGE -->
-                        <mat-form-field appearance="outline" fxFlexAlign="center">
+                        <mat-form-field fxFlexAlign="center">
                             <mat-label>{{ 'questions_per_page' | translate | capitalizeFirst }}</mat-label>
                             <input matInput placeholder="{{ 'questions_per_page' | translate | capitalizeFirst }}" formControlName="questions_per_page" matTooltip="Info about the action">
                             <mat-error *ngIf="surveyForm.get('questions_per_page').hasError('validation.not_int')">
@@ -106,7 +110,7 @@
                             {{ 'restrictSubmissions' | translate | capitalizeFirst }}
                         </mat-slide-toggle> 
                         <!-- ALLOWED SUBMISSIONS -->
-                        <mat-form-field appearance="outline" fxFlexAlign="center">
+                        <mat-form-field fxFlexAlign="center">
                             <mat-label>{{ 'allowedSubmissions' | translate | capitalizeFirst }}</mat-label>
                             <input matInput placeholder="{{ 'allowed_submissions' | translate | capitalizeFirst }}" formControlName="allowed_submissions" matTooltip="Info about the action">
                             <mat-error *ngIf="surveyForm.get('allowed_submissions').hasError('validation.not_int')">
@@ -154,13 +158,7 @@
                             </mat-error>
                         </mat-form-field>
                         <!-- DESCRIPTION -->
-                        <mat-form-field>
-                            <mat-label>{{ 'description' | translate | capitalizeFirst }}</mat-label>
-                            <textarea matInput placeholder="{{ 'description' | translate | capitalizeFirst }}" formControlName="description" matTooltip="Info about the action"></textarea>
-                            <mat-error *ngIf="questionForm.get('description').hasError('validation.not_string')">
-                                {{ 'validation.not_string' | translate | capitalizeFirst }}
-                            </mat-error>
-                        </mat-form-field>
+                        <ckeditor [editor]="editor" tagName="textarea" formControlName="description"></ckeditor>
                         <!-- TYPE -->
                         <mat-form-field appearance="fill">
                             <mat-label>{{ 'question.type' | translate | capitalizeFirst }}</mat-label>
