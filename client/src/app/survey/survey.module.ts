@@ -26,6 +26,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 import { ApplicationPipesModule } from '../pipes/application-pipes.module';
 
@@ -35,6 +36,9 @@ import { CapitalizeFirstPipe } from '../pipes/capitalize-first.pipe';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+//export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
   declarations: [
@@ -65,6 +69,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     MatSelectModule,
     MatSlideToggleModule,
     MatTabsModule,
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule,
+    NgxMatTimepickerModule,
     ApplicationPipesModule,
     TranslateModule.forRoot({
         loader: {
@@ -72,7 +79,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
             useFactory: HttpLoaderFactory,
             deps: [HttpClient]
         }
-    })
+    }),
+    NgxMaskModule.forRoot()
   ],
   providers: [
     CapitalizeFirstPipe
