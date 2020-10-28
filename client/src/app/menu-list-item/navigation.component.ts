@@ -19,7 +19,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class NavigationComponent implements OnInit {
     expanded: boolean;
-    @HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
+    @HostBinding('attr.aria-expanded') ariaExpanded;
     @Input() item: NavItem;
     @Input() depth: number;
 

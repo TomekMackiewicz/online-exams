@@ -45,15 +45,27 @@
                         <!-- DURATION -->
                         <mat-form-field appearance="outline">
                             <mat-label>{{ 'duration' | translate | capitalizeFirst }}</mat-label>
-                            <input matInput type="datetime-local" placeholder="{{ 'duration' | translate | capitalizeFirst }}" formControlName="duration" matTooltip="Info about the action">
+                            <input matInput [patterns]="durationPattern" 
+                                   mask="00:10:10" 
+                                   placeholder="HH:MM:SS" 
+                                   formControlName="duration" 
+                                   matTooltip="Survey duration (format HH:MM:SS). Leave blank for unlimited time"
+                            >
                             <mat-error *ngIf="surveyForm.get('duration').hasError('validation.not_int')">
                                 {{ 'validation.not_int' | translate | capitalizeFirst }}
                             </mat-error>                
                         </mat-form-field>            
                         <!-- NEXT SUBMISSION AFTER -->
+<!-- submit once - przemyśleć relację! -->
                         <mat-form-field appearance="outline">
                             <mat-label>{{ 'next_submission_after' | translate | capitalizeFirst }}</mat-label>
-                            <input matInput placeholder="{{ 'next_submission_after' | translate | capitalizeFirst }}" formControlName="next_submission_after" matTooltip="Info about the action">
+                            <!-- <input matInput placeholder="{{ 'next_submission_after' | translate | capitalizeFirst }}" formControlName="next_submission_after" matTooltip="Info about the action"> -->
+                            <input matInput [patterns]="durationPattern" 
+                                   mask="000 00:10:10" 
+                                   placeholder="DDD HH:MM:SS" 
+                                   formControlName="next_submission_after" 
+                                   matTooltip="Next submission after (format HH:MM:SS). Leave blank for unlimited time"
+                            >
                             <mat-error *ngIf="surveyForm.get('next_submission_after').hasError('validation.not_int')">
                                 {{ 'validation.not_int' | translate | capitalizeFirst }}
                             </mat-error>
@@ -61,7 +73,14 @@
                         <!-- TTL -->
                         <mat-form-field appearance="outline">
                             <mat-label>{{ 'ttl' | translate | capitalizeFirst }}</mat-label>
-                            <input type="datetime-local" matInput placeholder="{{ 'ttl' | translate | capitalizeFirst }}" formControlName="ttl" matTooltip="Info about the action">
+                            <input [ngxMatDatetimePicker]="picker"
+                                   matInput 
+                                   placeholder="{{ 'ttl' | translate | capitalizeFirst }}" 
+                                   formControlName="ttl" 
+                                   matTooltip="Info about the action"
+                            >
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <ngx-mat-datetime-picker #picker [showSpinners]="true" [enableMeridian]="true"></ngx-mat-datetime-picker>
                             <mat-error *ngIf="surveyForm.get('ttl').hasError('validation.not_int')">
                                 {{ 'validation.not_int' | translate | capitalizeFirst }}
                             </mat-error>

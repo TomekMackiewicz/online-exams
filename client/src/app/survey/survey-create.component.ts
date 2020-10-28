@@ -20,6 +20,12 @@ export class SurveyCreateComponent implements OnInit {
     surveyTitle: string;
     questionLabel: string;
     questions: Question[] = [];
+    durationPattern = { 
+        '0': { pattern: new RegExp('\[0-9\]')},
+        '1': { pattern: new RegExp('\[0-5\]')} 
+    };
+
+    //picker;
 
     questionTypes: QuestionType[] = [
         {value: 'steak-0', viewValue: 'Steak'},
@@ -63,8 +69,6 @@ export class SurveyCreateComponent implements OnInit {
     ) { }
     
     ngOnInit(): void {
-        //this.surveyForm.get('questions_per_page').disable();
-        //this.surveyForm.get('allowed_submissions').disable();
         this.onChanges();
         //
         // this.categoryService.getCategories().subscribe(
