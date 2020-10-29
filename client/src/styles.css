@@ -75,9 +75,9 @@ mat-sidenav {
 }
 
 .picker-unit > .flex-container > div {
-  background-color: #ebebeb;
+  /* background-color: #ebebeb;
   border: 1px solid #b3b3b3;
-  border-radius: 5px;
+  border-radius: 5px; */
 }
 
 .picker-unit > .flex-container > a {
@@ -91,4 +91,13 @@ mat-sidenav {
 .picker-unit > .flex-container > div > span {
   color: rgba(0,0,0,.38);
   padding: 0 5px 0 5px;
+}
+
+.duration-picker-label, .mat-slide-toggle-content {
+  color: rgba(0,0,0,.54);
+}
+
+.info-icon {
+  cursor: help;
+  color: rgba(0,0,0,.38);
 }

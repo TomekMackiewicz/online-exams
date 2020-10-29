@@ -15,9 +15,14 @@
             <mat-card-content>
                 <form [formGroup]="surveyForm" id="surveyForm" (ngSubmit)="saveSurvey()" fxLayout="column" fxLayoutGap="16px">
                     <!-- TITLE -->
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="outline" fxFlex="100">
                         <mat-label>{{ 'title' | translate | capitalizeFirst }}</mat-label>
-                        <input matInput placeholder="{{ 'title' | translate | capitalizeFirst }}" formControlName="title" [(ngModel)]="surveyTitle" required>
+                        <input matInput 
+                               placeholder="{{ 'title' | translate | capitalizeFirst }}" 
+                               formControlName="title" 
+                               [(ngModel)]="surveyTitle" 
+                               required
+                        >
                         <mat-error *ngIf="surveyForm.get('title').hasError('required')">
                             {{ 'validation.required' | translate | capitalizeFirst }}
                         </mat-error>
@@ -26,35 +31,78 @@
                         </mat-error>
                     </mat-form-field>
                     <!-- DESCRIPTION -->
-                    <mat-form-field>
-                        <mat-label>{{ 'description' | translate | capitalizeFirst }}</mat-label>
-                        <textarea matInput placeholder="{{ 'description' | translate | capitalizeFirst }}" formControlName="description" matTooltip="Info about the action"></textarea>
-                        <mat-error *ngIf="surveyForm.get('description').hasError('validation.not_string')">
-                            {{ 'validation.not_string' | translate | capitalizeFirst }}
-                        </mat-error>
-                    </mat-form-field>
-                    <!-- SUMMARY -->
-                    <mat-form-field>
-                        <mat-label>{{ 'summary' | translate | capitalizeFirst }}</mat-label>
-                        <textarea matInput placeholder="{{ 'summary' | translate | capitalizeFirst }}" formControlName="summary" matTooltip="Info about the action"></textarea>
-                        <mat-error *ngIf="surveyForm.get('summary').hasError('validation.not_string')">
-                            {{ 'validation.not_string' | translate | capitalizeFirst }}
-                        </mat-error>
-                    </mat-form-field>
-                    <!-- DURATION -->
                     <div fxLayout="row" fxFlex="100">
-                        <mat-form-field fxFlex.gt-sm="30">
-                            <mat-label>{{ 'duration' | translate | capitalizeFirst }}</mat-label>
-                            <input matInput [patterns]="durationPattern" 
-                                    mask="00:10:10" 
-                                    placeholder="HH:MM:SS" 
-                                    formControlName="duration" 
-                                    matTooltip="Survey duration (format HH:MM:SS). Leave blank for unlimited time"
-                            >
-                            <mat-error *ngIf="surveyForm.get('duration').hasError('validation.not_int')">
-                                {{ 'validation.not_int' | translate | capitalizeFirst }}
-                            </mat-error>                
-                        </mat-form-field> 
+                        <mat-form-field fxFlex="fill">
+                            <mat-label>{{ 'description' | translate | capitalizeFirst }}</mat-label>
+                            <textarea matInput 
+                                    placeholder="{{ 'description' | translate | capitalizeFirst }}" 
+                                    formControlName="description">
+                            </textarea>
+                            <mat-error *ngIf="surveyForm.get('description').hasError('validation.not_string')">
+                                {{ 'validation.not_string' | translate | capitalizeFirst }}
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-icon (click)="descriptionTooltip.show()" 
+                                  class="info-icon" 
+                                  #descriptionTooltip="matTooltip" 
+                                  matTooltip="Displayed at the beginning of the survey">info_outline
+                        </mat-icon>
+                    </div>
+                    <!-- SUMMARY -->
+                    <div fxLayout="row" fxFlex="100">
+                        <mat-form-field fxFlex="fill">
+                            <mat-label>{{ 'summary' | translate | capitalizeFirst }}</mat-label>
+                            <textarea matInput 
+                                    placeholder="{{ 'summary' | translate | capitalizeFirst }}" 
+                                    formControlName="summary" 
+                                    >
+                            </textarea>
+                            <mat-error *ngIf="surveyForm.get('summary').hasError('validation.not_string')">
+                                {{ 'validation.not_string' | translate | capitalizeFirst }}
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-icon (click)="summaryTooltip.show()" 
+                                  class="info-icon" 
+                                  #summaryTooltip="matTooltip" 
+                                  matTooltip="Displayed after the survey is finished">info_outline
+                        </mat-icon>
+                    </div>
+                    <!-- DURATION -->
+                    <input type="hidden" formControlName="duration">
+                    <div fxLayout="row" 
+                         fxFlex="100" 
+                         fxLayoutGap="16px"
+                    >
+                        <span class="duration-picker-label" 
+                              fxLayout="column" 
+                              fxLayoutAlign="center">{{ 'duration' | translate | capitalizeFirst }}
+                        </span>
+                        <ngx-time-duration-picker returnedValueUnit="second" (OnChange)="updateDuration($event)" fxLayout="row">
+                            <ngx-time-duration-picker-unit 
+                                name="hour" 
+                                min="0" 
+                                max="60" 
+                                step="1" 
+                                class="picker-unit"
+                                inputDisabled="false" 
+                                label="{{ 'hours' | translate | capitalizeFirst }}">
+                            </ngx-time-duration-picker-unit>
+                            <ngx-time-duration-picker-unit 
+                                name="minute" 
+                                min="0" 
+                                max="60" 
+                                step="1" 
+                                class="picker-unit"
+                                inputDisabled="false" 
+                                label="{{ 'minutes' | translate | capitalizeFirst }}">
+                            </ngx-time-duration-picker-unit>
+                        </ngx-time-duration-picker>
+                        <span class="fill-space"></span>
+                        <mat-icon (click)="durationTooltip.show()" 
+                                  class="info-icon" 
+                                  #durationTooltip="matTooltip" 
+                                  matTooltip="Survey duration. Leave blank for unlimited time">info_outline
+                        </mat-icon>
                     </div>
                     <!-- TTL -->
                     <div fxLayout="row" fxFlex="100">
@@ -63,8 +111,7 @@
                             <input [ngxMatDatetimePicker]="picker"
                                    matInput 
                                    placeholder="{{ 'ttl' | translate | capitalizeFirst }}" 
-                                   formControlName="ttl" 
-                                   matTooltip="Info about the action"
+                                   formControlName="ttl"
                             >
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <ngx-mat-datetime-picker #picker [showSpinners]="true" [enableMeridian]="true"></ngx-mat-datetime-picker>
@@ -72,14 +119,20 @@
                                 {{ 'validation.not_int' | translate | capitalizeFirst }}
                             </mat-error>
                         </mat-form-field>
+                        <span class="fill-space"></span>
+                        <mat-icon (click)="ttlTooltip.show()" 
+                                  class="info-icon" 
+                                  #ttlTooltip="matTooltip" 
+                                  matTooltip="Survey will be valid till... Leave blank to make it always accessible">info_outline
+                        </mat-icon>
                     </div>
-                    <div fxLayout="row" fxFlex="100" fxLayoutGap="16px">
+                    <div fxLayout.gt-sm="row" fxLayout="column" fxFlex="100" fxLayoutGap="16px">
                         <!-- PAGINATION -->
-                        <mat-slide-toggle formControlName="use_pagination" fxFlexAlign="center">
+                        <mat-slide-toggle formControlName="use_pagination">
                             {{ 'usePagination' | translate | capitalizeFirst }}
                         </mat-slide-toggle>
                         <!-- RESTRICT SUBMISSIONS -->
-                        <mat-slide-toggle formControlName="restrict_submissions" fxFlexAlign="center">
+                        <mat-slide-toggle formControlName="restrict_submissions" matTooltip="Limit number of submissions per user">
                             {{ 'restrictSubmissions' | translate | capitalizeFirst }}
                         </mat-slide-toggle>
                         <!-- SHUFFLE QUESTIONS -->
@@ -87,69 +140,85 @@
                             {{ 'shuffleQuestions' | translate | capitalizeFirst }}
                         </mat-slide-toggle>
                         <!-- IMMEDIATE ANSWERS -->
-                        <mat-slide-toggle formControlName="immediate_answers">
+                        <mat-slide-toggle formControlName="immediate_answers" matTooltip="Toggle to give user immediate feedback">
                             {{ 'immediateAnswers' | translate | capitalizeFirst }}
                         </mat-slide-toggle> 
                     </div>
-                    <div fxLayout="row" fxFlex="100" fxLayoutGap="16px">
+                    <div fxLayout.gt-sm="row" fxLayout="column" fxFlex="100" fxLayoutGap="16px">
                         <!-- QUESTIONS PER PAGE -->
-                        <mat-form-field fxFlexAlign="center">
+                        <mat-form-field>
                             <mat-label>{{ 'questions_per_page' | translate | capitalizeFirst }}</mat-label>
                             <input matInput 
                                    placeholder="{{ 'questions_per_page' | translate | capitalizeFirst }}" 
-                                   formControlName="questions_per_page" 
-                                   matTooltip="Info about the action"
+                                   formControlName="questions_per_page"
                             >
                             <mat-error *ngIf="surveyForm.get('questions_per_page').hasError('validation.not_int')">
                                 {{ 'validation.not_int' | translate | capitalizeFirst }}
                             </mat-error>
                         </mat-form-field> 
                         <!-- ALLOWED SUBMISSIONS -->
-                        <mat-form-field fxFlexAlign="center">
+                        <mat-form-field>
                             <mat-label>{{ 'allowedSubmissions' | translate | capitalizeFirst }}</mat-label>
                             <input matInput 
                                    placeholder="{{ 'allowed_submissions' | translate | capitalizeFirst }}" 
-                                   formControlName="allowed_submissions" 
-                                   matTooltip="Info about the action"
+                                   formControlName="allowed_submissions"
+                                   matTooltip="How many times user can take this survey"
                             >
                             <mat-error *ngIf="surveyForm.get('allowed_submissions').hasError('validation.not_int')">
                                 {{ 'validation.not_int' | translate | capitalizeFirst }}
                             </mat-error>
                         </mat-form-field>
-                        <!-- NEXT SUBMISSION AFTER -->
-                        <input type="hidden" formControlName="next_submission_after">
                     </div>
-                    <div fxLayout="row" fxFlex="100" fxLayoutGap="16px">
-                        <span fxLayout="column" fxLayoutAlign="center">{{ 'next_submission_after' | translate | capitalizeFirst }}</span>
-                        <ngx-time-duration-picker returnedValueUnit="second" (OnChange)="test($event)" fxLayout="row">
-                            <ngx-time-duration-picker-unit 
-                                name="minute" 
-                                min="0" 
-                                max="60" 
-                                step="1" 
-                                class="picker-unit" 
-                                label="{{ 'minutes' | translate | capitalizeFirst }}"
-                                inputDisabled="{{ disableNextSubmission }}">
-                            </ngx-time-duration-picker-unit>
-                            <ngx-time-duration-picker-unit 
-                                name="hour" 
-                                min="0" 
-                                max="60" 
-                                step="1" 
-                                class="picker-unit" 
-                                label="{{ 'hours' | translate | capitalizeFirst }}"
-                                inputDisabled="{{ disableNextSubmission }}">
-                            </ngx-time-duration-picker-unit>
-                            <ngx-time-duration-picker-unit 
-                                name="day" 
-                                min="0" 
-                                max="60" 
-                                step="1" 
-                                class="picker-unit" 
-                                label="{{ 'days' | translate | capitalizeFirst }}"
-                                inputDisabled="{{ disableNextSubmission }}">
-                            </ngx-time-duration-picker-unit>
-                        </ngx-time-duration-picker>
+                    <!-- NEXT SUBMISSION AFTER -->
+                    <input type="hidden" formControlName="next_submission_after">
+                    <div fxLayout.gt-sm="row" fxLayout="column" 
+                         fxFlex="100" 
+                         fxLayoutGap="16px"
+                    >
+                        <span class="duration-picker-label" 
+                              fxLayout="column" 
+                              fxLayoutAlign="center">{{ 'next_submission_after' | translate | capitalizeFirst }}
+                        </span>
+                        <div fxLayout="row" fxFlex="fill">
+                            <ngx-time-duration-picker returnedValueUnit="second" 
+                                                      (OnChange)="updateNextSubmissionAfter($event)" 
+                                                      fxLayout="row" 
+                                                      fxFlex="fill"
+                            >
+                                <ngx-time-duration-picker-unit 
+                                    name="minute" 
+                                    min="0" 
+                                    max="60" 
+                                    step="1" 
+                                    class="picker-unit" 
+                                    label="{{ 'minutes' | translate | capitalizeFirst }}"
+                                    inputDisabled="{{ disableNextSubmission }}">
+                                </ngx-time-duration-picker-unit>
+                                <ngx-time-duration-picker-unit 
+                                    name="hour" 
+                                    min="0" 
+                                    max="60" 
+                                    step="1" 
+                                    class="picker-unit" 
+                                    label="{{ 'hours' | translate | capitalizeFirst }}"
+                                    inputDisabled="{{ disableNextSubmission }}">
+                                </ngx-time-duration-picker-unit>
+                                <ngx-time-duration-picker-unit 
+                                    name="day" 
+                                    min="0" 
+                                    max="60" 
+                                    step="1" 
+                                    class="picker-unit" 
+                                    label="{{ 'days' | translate | capitalizeFirst }}"
+                                    inputDisabled="{{ disableNextSubmission }}">
+                                </ngx-time-duration-picker-unit>
+                            </ngx-time-duration-picker>
+                            <mat-icon (click)="nsaTooltip.show()" 
+                                      class="info-icon" 
+                                      #nsaTooltip="matTooltip" 
+                                      matTooltip="User may resubmit this survey after given amount of time">info_outline
+                            </mat-icon> 
+                        </div>                       
                     </div>
                 </form>
             </mat-card-content>

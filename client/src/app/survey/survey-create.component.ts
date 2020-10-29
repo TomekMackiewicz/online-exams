@@ -22,10 +22,6 @@ export class SurveyCreateComponent implements OnInit {
     questions: Question[] = [];
     responseData: any = {};
     disableNextSubmission: boolean = true;
-    durationPattern = { 
-        '0': { pattern: new RegExp('\[0-9\]')},
-        '1': { pattern: new RegExp('\[0-5\]')} 
-    };
 
     questionTypes: QuestionType[] = [
         {value: 'steak-0', viewValue: 'Steak'},
@@ -101,7 +97,8 @@ export class SurveyCreateComponent implements OnInit {
                 this.disableNextSubmission = false;
             }
             else {
-                this.disableNextSubmission = true;                
+                this.disableNextSubmission = true;
+                this.surveyForm.get('next_submission_after').reset();               
             }
         });
     }
@@ -155,9 +152,15 @@ export class SurveyCreateComponent implements OnInit {
 
     }
 
-    test(e) {
+    updateNextSubmissionAfter(e) {
         this.surveyForm.patchValue({
             next_submission_after: e
+        });
+    }
+
+    updateDuration(e) {
+        this.surveyForm.patchValue({
+            duration: e
         });
     }
 
