@@ -55,23 +55,6 @@
                                 {{ 'validation.not_int' | translate | capitalizeFirst }}
                             </mat-error>                
                         </mat-form-field> 
-                    </div>           
-                    <!-- NEXT SUBMISSION AFTER -->
-                    <div fxLayout="row" fxFlex="100">
-<!-- submit once - przemyśleć relację! -->
-                        <mat-form-field fxFlex.gt-sm="30">
-                            <mat-label>{{ 'next_submission_after' | translate | capitalizeFirst }}</mat-label>
-                            <!-- <input matInput placeholder="{{ 'next_submission_after' | translate | capitalizeFirst }}" formControlName="next_submission_after" matTooltip="Info about the action"> -->
-                            <input matInput [patterns]="durationPattern" 
-                                   mask="000 00:10:10" 
-                                   placeholder="DDD HH:MM:SS" 
-                                   formControlName="next_submission_after" 
-                                   matTooltip="Next submission after (format HH:MM:SS). Leave blank for unlimited time"
-                            >
-                            <mat-error *ngIf="surveyForm.get('next_submission_after').hasError('validation.not_int')">
-                                {{ 'validation.not_int' | translate | capitalizeFirst }}
-                            </mat-error>
-                        </mat-form-field>
                     </div>
                     <!-- TTL -->
                     <div fxLayout="row" fxFlex="100">
@@ -95,37 +78,79 @@
                         <mat-slide-toggle formControlName="use_pagination" fxFlexAlign="center">
                             {{ 'usePagination' | translate | capitalizeFirst }}
                         </mat-slide-toggle>
-                        <!-- QUESTIONS PER PAGE -->
-                        <mat-form-field fxFlexAlign="center">
-                            <mat-label>{{ 'questions_per_page' | translate | capitalizeFirst }}</mat-label>
-                            <input matInput placeholder="{{ 'questions_per_page' | translate | capitalizeFirst }}" formControlName="questions_per_page" matTooltip="Info about the action">
-                            <mat-error *ngIf="surveyForm.get('questions_per_page').hasError('validation.not_int')">
-                                {{ 'validation.not_int' | translate | capitalizeFirst }}
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="row" fxFlex="100" fxLayoutGap="16px">
                         <!-- RESTRICT SUBMISSIONS -->
                         <mat-slide-toggle formControlName="restrict_submissions" fxFlexAlign="center">
                             {{ 'restrictSubmissions' | translate | capitalizeFirst }}
+                        </mat-slide-toggle>
+                        <!-- SHUFFLE QUESTIONS -->
+                        <mat-slide-toggle formControlName="shuffle_questions">
+                            {{ 'shuffleQuestions' | translate | capitalizeFirst }}
+                        </mat-slide-toggle>
+                        <!-- IMMEDIATE ANSWERS -->
+                        <mat-slide-toggle formControlName="immediate_answers">
+                            {{ 'immediateAnswers' | translate | capitalizeFirst }}
                         </mat-slide-toggle> 
+                    </div>
+                    <div fxLayout="row" fxFlex="100" fxLayoutGap="16px">
+                        <!-- QUESTIONS PER PAGE -->
+                        <mat-form-field fxFlexAlign="center">
+                            <mat-label>{{ 'questions_per_page' | translate | capitalizeFirst }}</mat-label>
+                            <input matInput 
+                                   placeholder="{{ 'questions_per_page' | translate | capitalizeFirst }}" 
+                                   formControlName="questions_per_page" 
+                                   matTooltip="Info about the action"
+                            >
+                            <mat-error *ngIf="surveyForm.get('questions_per_page').hasError('validation.not_int')">
+                                {{ 'validation.not_int' | translate | capitalizeFirst }}
+                            </mat-error>
+                        </mat-form-field> 
                         <!-- ALLOWED SUBMISSIONS -->
                         <mat-form-field fxFlexAlign="center">
                             <mat-label>{{ 'allowedSubmissions' | translate | capitalizeFirst }}</mat-label>
-                            <input matInput placeholder="{{ 'allowed_submissions' | translate | capitalizeFirst }}" formControlName="allowed_submissions" matTooltip="Info about the action">
+                            <input matInput 
+                                   placeholder="{{ 'allowed_submissions' | translate | capitalizeFirst }}" 
+                                   formControlName="allowed_submissions" 
+                                   matTooltip="Info about the action"
+                            >
                             <mat-error *ngIf="surveyForm.get('allowed_submissions').hasError('validation.not_int')">
                                 {{ 'validation.not_int' | translate | capitalizeFirst }}
                             </mat-error>
                         </mat-form-field>
+                        <!-- NEXT SUBMISSION AFTER -->
+                        <input type="hidden" formControlName="next_submission_after">
                     </div>
-                    <!-- SHUFFLE QUESTIONS -->
-                    <mat-slide-toggle formControlName="shuffle_questions">
-                        {{ 'shuffleQuestions' | translate | capitalizeFirst }}
-                    </mat-slide-toggle>
-                    <!-- IMMEDIATE ANSWERS -->
-                    <mat-slide-toggle formControlName="immediate_answers">
-                        {{ 'immediateAnswers' | translate | capitalizeFirst }}
-                    </mat-slide-toggle>
+                    <div fxLayout="row" fxFlex="100" fxLayoutGap="16px">
+                        <span fxLayout="column" fxLayoutAlign="center">{{ 'next_submission_after' | translate | capitalizeFirst }}</span>
+                        <ngx-time-duration-picker returnedValueUnit="second" (OnChange)="test($event)" fxLayout="row">
+                            <ngx-time-duration-picker-unit 
+                                name="minute" 
+                                min="0" 
+                                max="60" 
+                                step="1" 
+                                class="picker-unit" 
+                                label="{{ 'minutes' | translate | capitalizeFirst }}"
+                                inputDisabled="{{ disableNextSubmission }}">
+                            </ngx-time-duration-picker-unit>
+                            <ngx-time-duration-picker-unit 
+                                name="hour" 
+                                min="0" 
+                                max="60" 
+                                step="1" 
+                                class="picker-unit" 
+                                label="{{ 'hours' | translate | capitalizeFirst }}"
+                                inputDisabled="{{ disableNextSubmission }}">
+                            </ngx-time-duration-picker-unit>
+                            <ngx-time-duration-picker-unit 
+                                name="day" 
+                                min="0" 
+                                max="60" 
+                                step="1" 
+                                class="picker-unit" 
+                                label="{{ 'days' | translate | capitalizeFirst }}"
+                                inputDisabled="{{ disableNextSubmission }}">
+                            </ngx-time-duration-picker-unit>
+                        </ngx-time-duration-picker>
+                    </div>
                 </form>
             </mat-card-content>
         </mat-card>

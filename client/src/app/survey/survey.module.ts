@@ -37,7 +37,8 @@ import { CapitalizeFirstPipe } from '../pipes/capitalize-first.pipe';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxMaskModule, IConfig } from 'ngx-mask'; // remove?
+import { NgxTimeDurationPickerModule } from 'ngx-time-duration-picker';
 //export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
@@ -74,6 +75,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
     NgxMatTimepickerModule,
     CKEditorModule,
     ApplicationPipesModule,
+    NgxTimeDurationPickerModule,
     TranslateModule.forRoot({
         loader: {
             provide: TranslateLoader,

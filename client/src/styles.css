@@ -69,3 +69,26 @@ mat-sidenav {
 .mat-slide-toggle {
   padding-bottom: 0.5em;
 }
+
+.picker-unit > .flex-container {
+  padding-right: 10px;
+}
+
+.picker-unit > .flex-container > div {
+  background-color: #ebebeb;
+  border: 1px solid #b3b3b3;
+  border-radius: 5px;
+}
+
+.picker-unit > .flex-container > a {
+  display: none;
+}
+
+.picker-unit > .flex-container > div > input {
+  border-style: none;
+}
+
+.picker-unit > .flex-container > div > span {
+  color: rgba(0,0,0,.38);
+  padding: 0 5px 0 5px;
+}

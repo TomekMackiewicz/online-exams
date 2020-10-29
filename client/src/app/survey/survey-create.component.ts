@@ -21,6 +21,7 @@ export class SurveyCreateComponent implements OnInit {
     questionLabel: string;
     questions: Question[] = [];
     responseData: any = {};
+    disableNextSubmission: boolean = true;
     durationPattern = { 
         '0': { pattern: new RegExp('\[0-9\]')},
         '1': { pattern: new RegExp('\[0-5\]')} 
@@ -38,7 +39,7 @@ export class SurveyCreateComponent implements OnInit {
         description: [''],
         summary: [''],
         duration: [''],
-        next_submission_after: [''],
+        next_submission_after: {value: null, disabled: true},
         ttl: [''],
         use_pagination: [''],
         questions_per_page: {value: null, disabled: true},
@@ -60,7 +61,6 @@ export class SurveyCreateComponent implements OnInit {
     constructor(
         private router: Router,
         private surveyService: SurveyService,
-        //private categoryService: CategoryService,
         private uiService: UiService,
         private fb: FormBuilder,
         private ref: ChangeDetectorRef
@@ -93,6 +93,15 @@ export class SurveyCreateComponent implements OnInit {
             }
             else {
                 this.surveyForm.get('allowed_submissions').enable();
+            }
+        });
+
+        this.surveyForm.get('allowed_submissions').valueChanges.subscribe(allowed_submissions => {
+            if (allowed_submissions > 1) {
+                this.disableNextSubmission = false;
+            }
+            else {
+                this.disableNextSubmission = true;                
             }
         });
     }
@@ -144,6 +153,12 @@ export class SurveyCreateComponent implements OnInit {
 
     clearQuestion() {
 
+    }
+
+    test(e) {
+        this.surveyForm.patchValue({
+            next_submission_after: e
+        });
     }
 
 }
