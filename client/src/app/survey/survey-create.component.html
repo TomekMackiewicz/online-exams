@@ -256,10 +256,10 @@
                         <!-- TYPE -->
                         <mat-form-field appearance="fill">
                             <mat-label>{{ 'question.type' | translate | capitalizeFirst }}</mat-label>
-                            <mat-select name = "type">
-                            <mat-option *ngFor = "let type of questionTypes" [value] = "type.value">
-                                {{ type.viewValue }}
-                            </mat-option>
+                            <mat-select formControlName = "type">
+                                <mat-option *ngFor = "let type of questionTypes" [value] = "type.value">
+                                    {{ type.viewValue }}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                         <!-- HINT -->
@@ -271,12 +271,12 @@
                             </mat-error>
                         </mat-form-field>           
                         <!-- REQUIRED -->
-                        <mat-slide-toggle formControlName="isRequired">
-                            {{ 'isRequired' | translate | capitalizeFirst }}
+                        <mat-slide-toggle formControlName="is_required">
+                            {{ 'is_required' | translate | capitalizeFirst }}
                         </mat-slide-toggle>
                         <!-- SHUFFLE ANSWERS -->
-                        <mat-slide-toggle formControlName="shuffleAnswers">
-                            {{ 'shuffleAnswers' | translate | capitalizeFirst }}
+                        <mat-slide-toggle formControlName="shuffle_answers">
+                            {{ 'shuffle_answers' | translate | capitalizeFirst }}
                         </mat-slide-toggle>
                     </form>
                 </mat-card-content>
@@ -286,7 +286,54 @@
                     Questions
                 </mat-card-title>
                 <mat-card-content>
-                    content
+
+                    <div cdkDropList class="example-list" (cdkDropListDropped)="dropQuestion($event)">
+                        <mat-accordion>
+                            <mat-expansion-panel *ngFor="let question of questions" cdkDrag>
+                                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        {{ question.label }}
+                                    </mat-panel-title>
+                                    <mat-panel-description fxLayout="row" fxLayoutGap="16px">
+                                        <span class="fill-space"></span>
+                                        <div class="example-handle" cdkDragHandle>
+                                            <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+                                                <path d="M0 0h24v24H0z" fill="none"></path>
+                                            </svg>
+                                        </div>
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <div fxLayout="row" fxLayoutGap="16px">
+                                    <span class="fill-space"></span>
+                                    <button mat-stroked-button color="primary" type="button" (click)="editQuestion($event)">
+                                        {{ 'edit' | translate | capitalizeFirst }}
+                                    </button>
+                                    <button mat-stroked-button color="warn" type="button" (click)="deleteQuestion($event)">
+                                        {{ 'delete' | translate | capitalizeFirst }}
+                                    </button>
+                                </div>
+                                <div fxLayout="column" fxLayoutGap="16px">
+                                    <mat-chip-list aria-label="Fish selection">
+                                        <mat-chip>{{ question.type }}</mat-chip>
+                                        <mat-chip [color]="question.is_required ? 'primary': 'warn'" selected>
+                                            {{ 'required' | translate | capitalizeFirst }}
+                                        </mat-chip>
+                                        <mat-chip [color]="question.shuffle_answers ? 'primary': 'warn'" selected>
+                                            {{ 'shuffle_answers' | translate | capitalizeFirst }}
+                                        </mat-chip>
+                                    </mat-chip-list>
+                                    <p *ngIf="question.hint">
+                                        <strong>{{ 'hint' | translate | capitalizeFirst }}:</strong> {{ question.hint }}
+                                    </p>
+                                    <!-- <mat-divider></mat-divider> -->
+                                    <div [innerHTML]="question.description"></div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                      
                 </mat-card-content>
             </mat-card>
         </div>

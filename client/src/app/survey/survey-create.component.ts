@@ -6,6 +6,7 @@ import { UiService } from '../common/services/ui.service';
 import { handleError } from '../common/functions/error.functions';
 import { Question } from '../question/question';
 import { QuestionType } from '../const/questionType';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
@@ -22,6 +23,7 @@ export class SurveyCreateComponent implements OnInit {
     questions: Question[] = [];
     responseData: any = {};
     disableNextSubmission: boolean = true;
+    panelOpenState = false;
 
     questionTypes: QuestionType[] = [
         {value: 'steak-0', viewValue: 'Steak'},
@@ -50,8 +52,8 @@ export class SurveyCreateComponent implements OnInit {
         description: [''],
         type: ['', Validators.required],
         hint: [''],
-        isRequired: ['', Validators.required],
-        shuffleAnswers: ['']
+        is_required: ['', Validators.required],
+        shuffle_answers: ['']
     });
 
     constructor(
@@ -145,7 +147,10 @@ export class SurveyCreateComponent implements OnInit {
     }
 
     saveQuestion() {
-
+        
+        this.questions.push(this.questionForm.getRawValue());
+        console.log(this.questions);
+        this.ref.detectChanges();
     }
 
     clearQuestion() {
@@ -164,4 +169,15 @@ export class SurveyCreateComponent implements OnInit {
         });
     }
 
+    dropQuestion(event: CdkDragDrop<string[]>) {
+        moveItemInArray(this.questions, event.previousIndex, event.currentIndex);
+    }
+
+    editQuestion(e) {
+
+    }
+
+    deleteQuestion(e) {
+
+    }
 }

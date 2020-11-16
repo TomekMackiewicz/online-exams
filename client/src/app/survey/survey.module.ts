@@ -26,6 +26,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatChipsModule}  from '@angular/material/chips';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ApplicationPipesModule } from '../pipes/application-pipes.module';
@@ -70,6 +73,9 @@ import { NgxTimeDurationPickerModule } from 'ngx-time-duration-picker';
     MatSelectModule,
     MatSlideToggleModule,
     MatTabsModule,
+    MatDividerModule,
+    MatChipsModule,
+    DragDropModule,
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
     NgxMatTimepickerModule,
