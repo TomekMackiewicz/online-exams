@@ -14,6 +14,6 @@ RUN npm i -g npm
 
 RUN npm install -g @angular/cli && npm cache clean --force
 
-EXPOSE 4200
+EXPOSE 4200 49153
 
 CMD [ "node" ]

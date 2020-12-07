@@ -1,6 +1,5 @@
 FROM debian:stretch
-
-LABEL author="Taha ZGUED" 
+ 
 ENV HTTPD_PREFIX /usr/local/apache2
 ENV PATH $HTTPD_PREFIX/bin:$PATH
 RUN mkdir -p "$HTTPD_PREFIX" \
