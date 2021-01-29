@@ -16,12 +16,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SurveyModule } from './survey/survey.module';
+import { UserModule } from './user/user.module';
+import { FrontModule } from './front/front.module';
 
 import { ApplicationPipesModule } from './pipes/application-pipes.module';
 
 import { NavigationComponent } from './menu-list-item/navigation.component';
 
 import { NavService } from './menu-list-item/nav.service';
+import { UserService } from './user/user.service';
 
 import { CapitalizeFirstPipe } from './pipes/capitalize-first.pipe';
 
@@ -45,6 +48,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     MatToolbarModule,
     DashboardModule,
     SurveyModule,
+    UserModule,
+    FrontModule,
     ApplicationPipesModule,
     TranslateModule.forRoot({
       loader: {
@@ -56,6 +61,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
   ],
   providers: [
     NavService,
+    UserService,
     CapitalizeFirstPipe,
     // { 
     //   provide: HTTP_INTERCEPTORS, 
